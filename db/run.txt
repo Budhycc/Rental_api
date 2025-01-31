@@ -1,0 +1,17 @@
+GET http://localhost:8080/api/denda/calculate
+
+mvn spring-boot:run
+
+curl -H "Content-Type: application/json" -X POST -d '{"username":"budhycc", "password":"12345", "name":"budi"}' http://localhost:8080/api/user
+curl -H "Content-Type: application/json" -X PUT -d '{"username":"budhycc", "password":"12345", "name":"bud. s"}' http://localhost:8080/api/user/id
+
+curl -H "Content-Type: application/json" -X POST -d "username=admin&password=12345" http://localhost:8080/api/login
+
+curl -H "Content-Type: application/json" -X POST -d '{"merk":"Toyota", "model":"Avanza", "tahun":2022, "platNomor":"B1234XYZ", "hargaSewaPerHari":500000, "status":"TERSEDIA"}' http://localhost:8080/api/mobil
+
+curl -H "Content-Type: application/json" -X POST -d '{"nama":"budhycc123", "alamat":"kendaari", "no_telepon":"77777", "email":"qwerty"}' http://localhost:8080/api/pelanggan
+
+curl -H "Content-Type: application/json" -X PUT -d '{"nama":"budhycc123", "alamat":"kendaari", "no_telepon":"77777", "email":"qwerty"}' http://localhost:8080/api/pelanggan/{id}
+
+curl -H "Content-Type: application/json" -X POST -d '{"pelanggan":{"idPelanggan":16,"nama":"budhycc","alamat":"tinanggea","noTelepon":"155","email":"contoh"},"mobil":{"idMobil":1,"merk":"Toyota","model":"Avanza","tahun":2022,"platNomor":"B1234XYZ","hargaSewaPerHari":500000.0,"status":"tersedia"},"tanggalMulai":"2025-01-26","tanggalSelesai":"2025-01-28","totalHarga":50000.0,"denda":0.0,"status":"selesai"}' http://localhost:8080/api/transaksi
+curl -H "Content-Type: application/json" -X PUT -d '{"pelanggan":{"idPelanggan":16,"nama":"budhycc","alamat":"tinanggea","noTelepon":"155","email":"contoh"},"mobil":{"idMobil":1,"merk":"Toyota","model":"Avanza","tahun":2022,"platNomor":"B1234XYZ","hargaSewaPerHari":500000.0,"status":"tersedia"},"tanggalMulai":"2025-01-26","tanggalSelesai":"2025-01-28","totalHarga":60000.0,"denda":50.0,"status":"selesai"}' http://localhost:8080/api/transaksi/2

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.2.1
+- https://www.phpmyadmin.net
+-
+- Host: localhost:3306
+- Generation Time: Jan 17, 2025 at 01:08 PM
+- Server version: 8.0.30
+- PHP Version: 8.1.10
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="rental" collation="utf8_general_ci" charset="utf8">
+            <pma:table name="data_mobil">
+                CREATE TABLE `data_mobil` (
+                  `id_mobil` int NOT NULL AUTO_INCREMENT,
+                  `merk` varchar(255) NOT NULL,
+                  `model` varchar(255) NOT NULL,
+                  `tahun` int NOT NULL,
+                  `plat_nomor` varchar(255) NOT NULL,
+                  `harga_sewa_per_hari` double NOT NULL,
+                  `status` enum(&#039;tersedia&#039;,&#039;disewa&#039;) DEFAULT &#039;tersedia&#039;,
+                  PRIMARY KEY (`id_mobil`),
+                  UNIQUE KEY `plat_nomor` (`plat_nomor`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+            </pma:table>
+            <pma:table name="data_pelanggan">
+                CREATE TABLE `data_pelanggan` (
+                  `id_pelanggan` int NOT NULL AUTO_INCREMENT,
+                  `nama` varchar(255) NOT NULL,
+                  `alamat` varchar(255) DEFAULT NULL,
+                  `no_telepon` varchar(255) DEFAULT NULL,
+                  `email` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`id_pelanggan`),
+                  UNIQUE KEY `email` (`email`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+            </pma:table>
+            <pma:table name="data_rental">
+                CREATE TABLE `data_rental` (
+                  `id_rental` int NOT NULL AUTO_INCREMENT,
+                  `id_transaksi` int NOT NULL,
+                  `id_mobil` int NOT NULL,
+                  `id_pelanggan` int NOT NULL,
+                  `tanggal_mulai` date NOT NULL,
+                  `tanggal_batas` date NOT NULL,
+                  PRIMARY KEY (`id_rental`),
+                  KEY `id_transaksi` (`id_transaksi`),
+                  KEY `id_mobil` (`id_mobil`),
+                  KEY `id_pelanggan` (`id_pelanggan`),
+                  CONSTRAINT `data_rental_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `data_transaksi` (`id_transaksi`),
+                  CONSTRAINT `data_rental_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `data_mobil` (`id_mobil`),
+                  CONSTRAINT `data_rental_ibfk_3` FOREIGN KEY (`id_pelanggan`) REFERENCES `data_pelanggan` (`id_pelanggan`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+            </pma:table>
+            <pma:table name="data_transaksi">
+                CREATE TABLE `data_transaksi` (
+                  `id_transaksi` int NOT NULL AUTO_INCREMENT,
+                  `id_pelanggan` int NOT NULL,
+                  `id_mobil` int NOT NULL,
+                  `tanggal_mulai` date NOT NULL,
+                  `tanggal_selesai` date NOT NULL,
+                  `total_harga` string NOT NULL,
+                  `denda` string DEFAULT NULL,
+                  `status` enum(&#039;berlangsung&#039;,&#039;selesai&#039;) DEFAULT &#039;berlangsung&#039;,
+                  PRIMARY KEY (`id_transaksi`),
+                  KEY `id_pelanggan` (`id_pelanggan`),
+                  KEY `id_mobil` (`id_mobil`),
+                  CONSTRAINT `data_transaksi_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `data_pelanggan` (`id_pelanggan`),
+                  CONSTRAINT `data_transaksi_ibfk_2` FOREIGN KEY (`id_mobil`) REFERENCES `data_mobil` (`id_mobil`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+            </pma:table>
+            <pma:table name="user">
+                CREATE TABLE `user` (
+                  `id_user` int NOT NULL AUTO_INCREMENT,
+                  `username` varchar(255) DEFAULT NULL,
+                  `password` varchar(255) DEFAULT NULL,
+                  `name` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`id_user`),
+                  UNIQUE KEY `username` (`username`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'rental'
+    -->
+    <database name="rental">
+        <!-- Table data_mobil -->
+        <table name="data_mobil">
+            <column name="id_mobil">1</column>
+            <column name="merk">Toyota</column>
+            <column name="model">Avanza</column>
+            <column name="tahun">2022</column>
+            <column name="plat_nomor">B1234XYZ</column>
+            <column name="harga_sewa_per_hari">500000</column>
+            <column name="status">tersedia</column>
+        </table>
+        <!-- Table data_pelanggan -->
+        <table name="data_pelanggan">
+            <column name="id_pelanggan">1</column>
+            <column name="nama">budi</column>
+            <column name="alamat">lapoa</column>
+            <column name="no_telepon">12345</column>
+            <column name="email">email@email.com</column>
+        </table>
+        <table name="data_pelanggan">
+            <column name="id_pelanggan">2</column>
+            <column name="nama">qq</column>
+            <column name="alamat">fd</column>
+            <column name="no_telepon">12233</column>
+            <column name="email">dsdsd</column>
+        </table>
+        <table name="data_pelanggan">
+            <column name="id_pelanggan">16</column>
+            <column name="nama">budhycc</column>
+            <column name="alamat">tinanggea</column>
+            <column name="no_telepon">155</column>
+            <column name="email">contoh</column>
+        </table>
+        <table name="data_pelanggan">
+            <column name="id_pelanggan">17</column>
+            <column name="nama">budhycc123</column>
+            <column name="alamat">kendaari</column>
+            <column name="no_telepon">77777</column>
+            <column name="email">qwerty</column>
+        </table>
+        <table name="data_pelanggan">
+            <column name="id_pelanggan">22</column>
+            <column name="nama">dfdsf</column>
+            <column name="alamat">fsfsdf</column>
+            <column name="no_telepon">5464</column>
+            <column name="email">rfhgdghch</column>
+        </table>
+        <!-- Table data_rental -->
+        <!-- Table data_transaksi -->
+        <!-- Table user -->
+        <table name="user">
+            <column name="id_user">1</column>
+            <column name="username">budhycc</column>
+            <column name="password">12345</column>
+            <column name="name">budi</column>
+        </table>
+    </database>
+</pma_xml_export>

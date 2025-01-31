@@ -1,0 +1,53 @@
+CREATE TABLE data_pelanggan (
+    id_pelanggan INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100) NOT NULL,
+    alamat VARCHAR(255),
+    no_telepon VARCHAR(15),
+    email VARCHAR(100) UNIQUE
+);
+
+
+CREATE TABLE data_mobil (
+    id_mobil INT AUTO_INCREMENT PRIMARY KEY,
+    merk VARCHAR(100) NOT NULL,
+    model VARCHAR(100) NOT NULL,
+    tahun INT NOT NULL,
+    plat_nomor VARCHAR(20) UNIQUE NOT NULL,
+    harga_sewa_per_hari DECIMAL(10, 2) NOT NULL,
+    status ENUM('tersedia', 'disewa') DEFAULT 'tersedia'
+);
+
+
+CREATE TABLE data_transaksi (
+    id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
+    id_pelanggan INT NOT NULL,
+    id_mobil INT NOT NULL,
+    tanggal_mulai DATE NOT NULL,
+    tanggal_selesai DATE NOT NULL,
+    total_harga DECIMAL(10, 2) NOT NULL,
+    denda DECIMAL(10, 2) DEFAULT 0,
+    status ENUM('berlangsung', 'selesai') DEFAULT 'berlangsung',
+    FOREIGN KEY (id_pelanggan) REFERENCES data_pelanggan(id_pelanggan),
+    FOREIGN KEY (id_mobil) REFERENCES data_mobil(id_mobil)
+);
+
+
+CREATE TABLE data_rental (
+    id_rental INT AUTO_INCREMENT PRIMARY KEY,
+    id_transaksi INT NOT NULL,
+    id_mobil INT NOT NULL,
+    id_pelanggan INT NOT NULL,
+    tanggal_mulai DATE NOT NULL,
+    tanggal_batas DATE NOT NULL,
+    FOREIGN KEY (id_transaksi) REFERENCES data_transaksi(id_transaksi),
+    FOREIGN KEY (id_mobil) REFERENCES data_mobil(id_mobil),
+    FOREIGN KEY (id_pelanggan) REFERENCES data_pelanggan(id_pelanggan)
+);
+
+
+UPDATE data_transaksi
+SET denda = CASE 
+    WHEN CURDATE() > tanggal_selesai THEN (DATEDIFF(CURDATE(), tanggal_selesai) * 50000)
+    ELSE 0
+END
+WHERE status = 'berlangsung';
