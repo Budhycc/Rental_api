@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="main">
+  <target name="main">
+    <exec failonerror="true" executable="jpackage">
+      <arg value="--type" />
+      <arg value="app-image" />
+      <arg value="--input" />
+      <arg value="C:\laragon\www\Rental_api\api\target" />
+      <arg value="--main-jar" />
+      <arg value="api-0.0.1-SNAPSHOT.jar" />
+      <arg value="--main-class" />
+      <arg value="com.rental.api.ApiApplication" />
+      <arg value="--name" />
+      <arg value="api" />
+      <arg value="--dest" />
+      <arg value="C:\laragon\www\Rental_api\api/target-dist" />
+      <arg value="--runtime-image" />
+      <arg value="C:\laragon\www\Rental_api\api\target/runtime" />
+      <arg value="--icon" />
+      <arg value="src/main/resources/icon.ico" />
+      <arg value="--vendor" />
+      <arg value="YourCompany" />
+    </exec>
+  </target>
+</project>
